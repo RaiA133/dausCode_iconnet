@@ -1,0 +1,21 @@
+{
+  "name": "aplikasi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run open",
+    "open": "concurrently \"http-server -a localhost -p 1234\" \"open http://localhost:1234/build\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RaiA133/dausCode_iconnet.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RaiA133/dausCode_iconnet/issues"
+  },
+  "homepage": "https://github.com/RaiA133/dausCode_iconnet#readme"
+}

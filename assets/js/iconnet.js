@@ -1,8 +1,9 @@
 
 function fetchData(region){
-    // GOOGLE API Spread Sheets
-    const apiUrl = `https://sheets.googleapis.com/v4/spreadsheets/17JHm_VIMaJG3D_JADeCYWFTxRUiKe7LTTTXCZjAlhmU/values/${region}?key=AIzaSyCwOuZAm8MkSet-tEv7sYCrkFUx8HSsAnk`;
-
+    // GOOGLE API Spread Sheets //
+    // const apiUrl = `https://sheets.googleapis.com/v4/spreadsheets/17JHm_VIMaJG3D_JADeCYWFTxRUiKe7LTTTXCZjAlhmU/values/${region}?key=AIzaSyCwOuZAm8MkSet-tEv7sYCrkFUx8HSsAnk`;
+    const apiUrl = `https://sheets.googleapis.com/v4/spreadsheets/17JHm_VIMaJG3D_JADeCYWFTxRUiKe7LTTTXCZjAlhmU/values/${region}!A1:AA20?key=AIzaSyCwOuZAm8MkSet-tEv7sYCrkFUx8HSsAnk&majorDimension=ROWS`;
+    console.log(apiUrl);
 // PROSES FETCH //
 fetch(apiUrl)
     .then(response => response.json())
@@ -13,6 +14,13 @@ fetch(apiUrl)
         // mengulang data hasil fetch 
         data.values.forEach((row, index) => {
             if (index === 0) {
+                
+                // HEARDER "AKSI"
+                const newHeader = document.createElement("th");
+                newHeader.textContent = "AKSI"; // Header keterangan "Aksi"
+                tableHeader.appendChild(newHeader);
+                // END HEARDER "AKSI"
+
                 // header tabel berdasarkan index = 0 di JSON atau baris 1 di spreadsheet 
                 row.forEach((headerText, headerIndex) => {
                     const newHeader = document.createElement("th");
@@ -22,6 +30,16 @@ fetch(apiUrl)
             } else {
                 // membuat perulangan isi tabel tabel (baris 2-end) atau index selain 0
                 const newRow = document.createElement("tr");
+
+                // BUTTON
+                const newButtonCell = document.createElement("td");
+                const newButton = document.createElement("button");
+                newButton.textContent = "Pelanggan Terdekat";
+                newButton.className = "btn btn-dark";
+                newButtonCell.appendChild(newButton);
+                newRow.appendChild(newButtonCell);
+                // END BUTTON
+
                 row.forEach((cellText, cellIndex) => {
                     const newCell = document.createElement(index === 1 && cellIndex === 0 ? "th" : "td");
                     newCell.textContent = cellText;
