@@ -3,6 +3,7 @@
 let kota;
 
 // API NAMA KOTA DAN KOOR
+
 const koorPelangganAPI = "https://sheets.googleapis.com/v4/spreadsheets/17JHm_VIMaJG3D_JADeCYWFTxRUiKe7LTTTXCZjAlhmU/values/PELANGGAN!C2:E7?key=AIzaSyCwOuZAm8MkSet-tEv7sYCrkFUx8HSsAnk&majorDimension=ROWS";
 
 // Fetch data from the API tapi data yg diambil hanya nama dan koor yg dijadikan key dan value

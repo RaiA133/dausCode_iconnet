@@ -2,57 +2,40 @@
 function fetchData(region){
     // GOOGLE API Spread Sheets //
     // const apiUrl = `https://sheets.googleapis.com/v4/spreadsheets/17JHm_VIMaJG3D_JADeCYWFTxRUiKe7LTTTXCZjAlhmU/values/${region}?key=AIzaSyCwOuZAm8MkSet-tEv7sYCrkFUx8HSsAnk`;
-    const apiUrl = `https://sheets.googleapis.com/v4/spreadsheets/17JHm_VIMaJG3D_JADeCYWFTxRUiKe7LTTTXCZjAlhmU/values/${region}!A1:AA20?key=AIzaSyCwOuZAm8MkSet-tEv7sYCrkFUx8HSsAnk&majorDimension=ROWS`;
-    console.log(apiUrl);
+
+const apiUrl = `https://sheets.googleapis.com/v4/spreadsheets/17JHm_VIMaJG3D_JADeCYWFTxRUiKe7LTTTXCZjAlhmU/values/${region}!A1:AA20?key=AIzaSyCwOuZAm8MkSet-tEv7sYCrkFUx8HSsAnk&majorDimension=ROWS`;
+
 // PROSES FETCH //
 fetch(apiUrl)
     .then(response => response.json())
     .then(data => {
-        const tableBody = document.getElementById("data-table-body");
-        const tableHeader = document.querySelector(".table thead tr");
+        const detailList = document.querySelector(".detail");
 
-        // mengulang data hasil fetch 
-        data.values.forEach((row, index) => {
-            if (index === 0) {
-                
-                // HEARDER "AKSI"
-                const newHeader = document.createElement("th");
-                newHeader.textContent = "AKSI"; // Header keterangan "Aksi"
-                tableHeader.appendChild(newHeader);
-                // END HEARDER "AKSI"
+        // Mengambil header dari data (baris pertama)
+        const headerRow = data.values[0];
 
-                // header tabel berdasarkan index = 0 di JSON atau baris 1 di spreadsheet 
-                row.forEach((headerText, headerIndex) => {
-                    const newHeader = document.createElement("th");
-                    newHeader.textContent = headerText;
-                    tableHeader.appendChild(newHeader);
-                });
-            } else {
-                // membuat perulangan isi tabel tabel (baris 2-end) atau index selain 0
-                const newRow = document.createElement("tr");
+        // Mengambil data dari baris kedua (index 1)
+        const dataRow = data.values[1];
 
-                // BUTTON
-                const newButtonCell = document.createElement("td");
-                const newButton = document.createElement("button");
-                newButton.textContent = "Pelanggan Terdekat";
-                newButton.className = "btn btn-dark";
-                newButtonCell.appendChild(newButton);
-                newRow.appendChild(newButtonCell);
-                // END BUTTON
+        // Mengisi elemen .detail dengan header dan data secara vertikal
+        headerRow.forEach((headerText, headerIndex) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = headerText + " : ";
+            listItem.className = "list-group-item fw-bold";
+            
+            
+            const dataValue = document.createElement("span");
+            dataValue.className = "fw-normal";
+            dataValue.textContent = dataRow[headerIndex];
+            listItem.appendChild(dataValue);
 
-                row.forEach((cellText, cellIndex) => {
-                    const newCell = document.createElement(index === 1 && cellIndex === 0 ? "th" : "td");
-                    newCell.textContent = cellText;
-                    newRow.appendChild(newCell);
-                });
-                tableBody.appendChild(newRow);
-            }
+            detailList.appendChild(listItem);
         });
     })
     .catch(error => {
         console.error("Error fetching data:", error);
     });
-}
+}   
 // end PROSES FETCH //
 
 
